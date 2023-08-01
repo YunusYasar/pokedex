@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokedox</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+    <script src="htmlTemplates.js"></script>
+    <!--Bootsrap file-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="chart.js"></script>
+  </head>
+  <body onload="init()">
+    <main class="main-container">
+      <header id="header">
+        <nav>
+          <div class="nav-logo">
+            <a href="index.html">
+              <img class="header-logo" src="./img/pokeball.png" alt="Logo" />
+            </a>
+            <h1 class="headline">Pokedex</h1>
+          </div>
+          <div class="search-content">
+            <input placeholder="Search.." type="search" id="search" required>
+            <button type="button" class="btn btn-primary" id="searchButton" onclick="searchPokemon()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+              </svg>
+              Search
+            </button>
+          </div>
+        </nav>
+      </header>
+
+
+      <div id="pokemonCardList"></div>
+
+      <div class="button-container">
+        <button onclick="loadPokemon(currentCount)" type="button" class="btn btn-primary btn-lg" id="loadMorePokemon">Load Pokemon</button>
+      </div>
+      <div>
+        <a id="to-top-btn" href="#header">
+            <img class="pikachu" src="img/pikachu.png" alt="">
+        </a>
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="pokemonModal" tabindex="-1" aria-labelledby="pokemonModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          
+          <div class="modal-content">
+            
+            <!-- Ihre Pokemon Detail hier -->
+            <div id="pokemonModalCardList">
+
+              
+            </div>
+            
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

@@ -59,11 +59,17 @@ async function loadPokemon(start) {
 }
 
 function renderPokemonCards(pokemon, count) {
-  let types = pokemon.types.map(typeInfo => `<div class="pokemon-type">${capitalizeFirstLetter(typeInfo.type.name)}</div>`).join('');
-  let color = colorPalette[pokemon.color];
-  let pokemonName = capitalizeFirstLetter(pokemon.name);
-  let pokemonId = pokemon.id;
-  document.getElementById('pokemonCardList').innerHTML += pokemonCardsHtml(color, pokemonId, pokemonName, count, types, pokemon);
+  let pokemonCardList = document.getElementById('pokemonCardList');
+  let existingPokemonCard = pokemonCardList.querySelector(`.pokemon-card[data-id="${pokemon.id}"]`);
+
+  if (!existingPokemonCard) {
+    // Wenn die Karte für dieses Pokémon noch nicht existiert, rendere sie
+    let types = pokemon.types.map(typeInfo => `<div class="pokemon-type">${capitalizeFirstLetter(typeInfo.type.name)}</div>`).join('');
+    let color = colorPalette[pokemon.color];
+    let pokemonName = capitalizeFirstLetter(pokemon.name);
+    let pokemonId = pokemon.id;
+    pokemonCardList.innerHTML += pokemonCardsHtml(color, pokemonId, pokemonName, count, types, pokemon);
+  }
 }
 
 function renderPokemonModalCards(pokemon, count) {
@@ -104,7 +110,7 @@ function getLoadedPokemonByIndex(pokemonId) {
 
 function openModal(start) {
   loadPokemon(start);
-  var myModal = new bootstrap.Modal(document.getElementById('pokemonModal'));
+  let myModal = new bootstrap.Modal(document.getElementById('pokemonModal'));
   myModal.show();
 
   // Übergebe die Pokemon-ID, wenn du den Modal öffnest
@@ -116,27 +122,18 @@ function capitalizeFirstLetter(string) {
 }
 
 async function searchPokemon() {
-  // Get the search input element
-  let searchInput = document.getElementById('search');
-  let userInput = searchInput.value.trim(); // Get the user input and trim any extra spaces
-  let loadMoreButton = document.getElementById('loadMorePokemon'); // Get the load more button element
-  if (userInput) {
-    // Make sure the user has entered something
-    let pokemonName = userInput.toLowerCase(); // Convert the user input to lowercase (to make the search case-insensitive)
-    let pokemon = await getPokemon(pokemonName); // Get the pokemon
+  let searchInput = document.getElementById('search').value;
+  searchInput = searchInput.trim().toLowerCase();
 
-    if (pokemon) {
-      // Check if the request was successful
-      document.getElementById('pokemonCardList').innerHTML = ''; // Clear previous cards
-      renderPokemonCards(pokemon, pokemon.id); // Generate the Pokemon card
-      if (loadMoreButton) loadMoreButton.style.display = 'none'; // Hide the load more button
-
-      searchInput.value = ''; // Clear the search input
-    } else {
-      alert(`Pokémon ${pokemonName} wurde nicht gefunden.`);
+  if (!searchInput.match(/^[a-zA-Z]+$/)) {
+    // Gibt zurück, wenn die Eingabe etwas anderes als Buchstaben ist
+    return;
+  }
+  document.getElementById('pokemonCardList').innerHTML = '';
+  for (let i = 0; i < loadedPokemon.length; i++) {
+    let name = loadedPokemon[i].name;
+    if (name.toLowerCase().includes(searchInput)) {
+      renderPokemonCards(loadedPokemon[i], loadedPokemon[i].id);
     }
-  } else {
-    alert('Bitte geben Sie einen Pokémon-Namen ein!');
-    if (loadMoreButton) loadMoreButton.style.display = 'block'; // Show the load more button if the search was not successful
   }
 }

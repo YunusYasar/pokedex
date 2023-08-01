@@ -1,6 +1,6 @@
 function pokemonCardsHtml(color, pokemonId, pokemonName, count, types, pokemon) {
   return `
-      <div class="pokemon-card" style="background-color: ${color}"  onclick="openModal(${pokemonId})">
+      <div class="pokemon-card" data-id="${pokemonId}" style="background-color: ${color}" onclick="openModal(${pokemonId})">
         <div>
           <div class="card-head">
             <h2 id="cardPokemonName">${pokemonName}</h2>
@@ -49,8 +49,8 @@ function infoContainerHtml(pokemon, pokemonName, height, weight, ability, abilit
         <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
           <div class="accordion-body">
             <p><strong>Name:</strong> <span id="pokemonName1">${pokemonName}</span></p>
-            <p><strong>Height:</strong> <span id="pokemonHeight">${height}</span></p>
-            <p><strong>Weight:</strong> <span id="pokemonWeight">${weight}</span></p>
+            <p><strong>Height:</strong> <span id="pokemonHeight">${height / 10}m</span></p>
+            <p><strong>Weight:</strong> <span id="pokemonWeight">${weight / 10}kg</span></p>
             <p><strong>Ability:</strong> <span id="pokemonAbility">${ability}</span> <span id="pokemonAbility1">${ability1}</span></p>
           </div>
         </div>
